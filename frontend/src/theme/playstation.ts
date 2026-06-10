@@ -1,0 +1,31 @@
+import { createThemeTokens } from './base'
+
+export const playstationTheme = createThemeTokens({
+  id: 'playstation',
+  label: 'Play Experience',
+  description: 'Experiencia cinematográfica',
+  idealFor: ['Details', 'Landing', 'Rankings'],
+  transition: 'fade',
+  variables: {
+    '--color-accent': '#4C7DFF',
+    '--color-accent-hover': '#7C9EFF',
+    '--color-accent-2': '#E85DFF',
+    '--color-bg-primary': '#070814',
+    '--color-bg-secondary': '#0F1022',
+    '--color-surface-1': '#101224',
+    '--color-surface-2': '#151731',
+    '--color-surface-3': '#1E2144',
+    '--color-text-primary': '#F7F8FF',
+    '--color-text-secondary': '#D7DCF7',
+    '--color-text-muted': '#9AA2C9',
+    '--color-surface-glass': 'rgba(255, 255, 255, 0.05)',
+    '--color-surface-panel': 'rgba(76, 125, 255, 0.10)',
+    '--color-border-subtle': 'rgba(124, 158, 255, 0.16)',
+    '--color-border-strong': 'rgba(255, 255, 255, 0.13)',
+    '--font-display': '"Cormorant Garamond", serif',
+    '--font-body': '"DM Sans", sans-serif',
+    '--shadow-glow-accent': '0 0 56px rgba(76, 125, 255, 0.18)',
+    '--shadow-card': '0 24px 50px rgba(0, 0, 0, 0.42)',
+    '--theme-ambient': 'radial-gradient(circle at 15% 15%, rgba(76, 125, 255, 0.22), transparent 30%), radial-gradient(circle at 80% 18%, rgba(232, 93, 255, 0.20), transparent 32%)',
+  },
+})

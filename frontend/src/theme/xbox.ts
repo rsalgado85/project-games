@@ -1,0 +1,31 @@
+import { createThemeTokens } from './base'
+
+export const xboxTheme = createThemeTokens({
+  id: 'xbox',
+  label: 'Next Gen Console',
+  description: 'Netflix para videojuegos',
+  idealFor: ['Home', 'Tendencias', 'Recomendaciones'],
+  transition: 'slide',
+  variables: {
+    '--color-accent': '#9BF00B',
+    '--color-accent-hover': '#B4FF2A',
+    '--color-accent-2': '#44D6FF',
+    '--color-bg-primary': '#050607',
+    '--color-bg-secondary': '#0D1114',
+    '--color-surface-1': '#0D1114',
+    '--color-surface-2': '#11161A',
+    '--color-surface-3': '#182026',
+    '--color-text-primary': '#F4F8F5',
+    '--color-text-secondary': '#CAD4CB',
+    '--color-text-muted': '#7F9284',
+    '--color-surface-glass': 'rgba(255, 255, 255, 0.04)',
+    '--color-surface-panel': 'rgba(255, 255, 255, 0.07)',
+    '--color-border-subtle': 'rgba(155, 240, 11, 0.16)',
+    '--color-border-strong': 'rgba(255, 255, 255, 0.14)',
+    '--font-display': '"Rajdhani", sans-serif',
+    '--font-body': '"DM Sans", sans-serif',
+    '--shadow-glow-accent': '0 0 48px rgba(155, 240, 11, 0.16)',
+    '--shadow-card': '0 18px 40px rgba(0, 0, 0, 0.45)',
+    '--theme-ambient': 'radial-gradient(circle at 20% 10%, rgba(155, 240, 11, 0.18), transparent 26%), radial-gradient(circle at 85% 20%, rgba(68, 214, 255, 0.14), transparent 28%)',
+  },
+})

@@ -1,0 +1,31 @@
+import { createThemeTokens } from './base'
+
+export const cyberpunkTheme = createThemeTokens({
+  id: 'cyberpunk',
+  label: 'Cyberpunk',
+  description: 'Gaming del futuro',
+  idealFor: ['Dashboard', 'Statistics', 'Data Viz'],
+  transition: 'blur',
+  variables: {
+    '--color-accent': '#00F5FF',
+    '--color-accent-hover': '#5AFBFF',
+    '--color-accent-2': '#FF3DF2',
+    '--color-bg-primary': '#05060D',
+    '--color-bg-secondary': '#0B1020',
+    '--color-surface-1': '#10172B',
+    '--color-surface-2': '#131D36',
+    '--color-surface-3': '#1A2747',
+    '--color-text-primary': '#F4FAFF',
+    '--color-text-secondary': '#D0E3FF',
+    '--color-text-muted': '#7C95B8',
+    '--color-surface-glass': 'rgba(0, 245, 255, 0.08)',
+    '--color-surface-panel': 'rgba(255, 61, 242, 0.12)',
+    '--color-border-subtle': 'rgba(0, 245, 255, 0.18)',
+    '--color-border-strong': 'rgba(255, 61, 242, 0.20)',
+    '--font-display': '"Oxanium", sans-serif',
+    '--font-body': '"IBM Plex Sans", sans-serif',
+    '--shadow-glow-accent': '0 0 54px rgba(0, 245, 255, 0.22)',
+    '--shadow-card': '0 20px 54px rgba(0, 0, 0, 0.50)',
+    '--theme-ambient': 'radial-gradient(circle at 20% 20%, rgba(0, 245, 255, 0.22), transparent 30%), radial-gradient(circle at 82% 18%, rgba(255, 61, 242, 0.20), transparent 30%), radial-gradient(circle at 50% 85%, rgba(0, 255, 163, 0.12), transparent 34%)',
+  },
+})

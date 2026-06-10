@@ -1,0 +1,31 @@
+import { createThemeTokens } from './base'
+
+export const esportsTheme = createThemeTokens({
+  id: 'esports',
+  label: 'Esports Pro',
+  description: 'Centro de operaciones competitivo',
+  idealFor: ['Rankings', 'Leaderboards', 'Comparisons'],
+  transition: 'morph',
+  variables: {
+    '--color-accent': '#FF4655',
+    '--color-accent-hover': '#FF6B78',
+    '--color-accent-2': '#F4B942',
+    '--color-bg-primary': '#060708',
+    '--color-bg-secondary': '#101113',
+    '--color-surface-1': '#121416',
+    '--color-surface-2': '#171A1E',
+    '--color-surface-3': '#1F2329',
+    '--color-text-primary': '#FFFFFF',
+    '--color-text-secondary': '#D7D9E0',
+    '--color-text-muted': '#9297A8',
+    '--color-surface-glass': 'rgba(255, 70, 85, 0.07)',
+    '--color-surface-panel': 'rgba(255, 70, 85, 0.13)',
+    '--color-border-subtle': 'rgba(255, 70, 85, 0.18)',
+    '--color-border-strong': 'rgba(255, 255, 255, 0.12)',
+    '--font-display': '"Barlow Condensed", sans-serif',
+    '--font-body': '"DM Sans", sans-serif',
+    '--shadow-glow-accent': '0 0 54px rgba(255, 70, 85, 0.20)',
+    '--shadow-card': '0 20px 48px rgba(0, 0, 0, 0.46)',
+    '--theme-ambient': 'radial-gradient(circle at 18% 22%, rgba(255, 70, 85, 0.24), transparent 28%), radial-gradient(circle at 78% 18%, rgba(244, 185, 66, 0.16), transparent 30%)',
+  },
+})

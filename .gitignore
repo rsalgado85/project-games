@@ -1,0 +1,34 @@
+# Root
+node_modules/
+.DS_Store
+*.log
+.env
+.env.docker
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.production
+frontend/.env.docker
+
+# Backend
+backend/vendor/
+backend/.env
+backend/.env.docker
+backend/storage/logs/*.log
+backend/bootstrap/cache/*.php
+backend/storage/app/
+backend/storage/framework/cache/
+backend/storage/framework/sessions/
+backend/storage/framework/views/
+backend/*.sqlite
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db

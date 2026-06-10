@@ -1,0 +1,21 @@
+<svg width="640" height="360" viewBox="0 0 640 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="640" y2="360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1E1E2E"/>
+      <stop offset="1" stop-color="#10131D"/>
+    </linearGradient>
+    <radialGradient id="r" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(320 180) rotate(90) scale(160 320)">
+      <stop stop-color="#6C63FF" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#6C63FF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="640" height="360" rx="24" fill="url(#g)"/>
+  <rect width="640" height="360" rx="24" fill="url(#r)"/>
+  <rect x="144" y="92" width="352" height="176" rx="20" fill="#0F1420" stroke="rgba(255,255,255,0.08)"/>
+  <rect x="168" y="116" width="128" height="16" rx="8" fill="rgba(255,255,255,0.16)"/>
+  <rect x="168" y="144" width="212" height="12" rx="6" fill="rgba(255,255,255,0.10)"/>
+  <rect x="168" y="166" width="180" height="12" rx="6" fill="rgba(255,255,255,0.10)"/>
+  <circle cx="426" cy="170" r="42" fill="#6C63FF" fill-opacity="0.16"/>
+  <path d="M412 170l12-12 12 12-12 12-12-12z" fill="#8A84FF"/>
+  <text x="320" y="228" text-anchor="middle" fill="rgba(255,255,255,0.75)" font-family="Arial, sans-serif" font-size="18" font-weight="700">GameVault</text>
+</svg>

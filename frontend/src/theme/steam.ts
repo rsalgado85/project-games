@@ -1,0 +1,31 @@
+import { createThemeTokens } from './base'
+
+export const steamTheme = createThemeTokens({
+  id: 'steam',
+  label: 'PC Gamer',
+  description: 'Herramienta profesional para gamers',
+  idealFor: ['Dashboard', 'Comparativas', 'Estadísticas'],
+  transition: 'blur',
+  variables: {
+    '--color-accent': '#66C0F4',
+    '--color-accent-hover': '#8BD5FF',
+    '--color-accent-2': '#9AE6B4',
+    '--color-bg-primary': '#071018',
+    '--color-bg-secondary': '#0D1822',
+    '--color-surface-1': '#101C28',
+    '--color-surface-2': '#162534',
+    '--color-surface-3': '#1C3042',
+    '--color-text-primary': '#F2F7FB',
+    '--color-text-secondary': '#D2E0EA',
+    '--color-text-muted': '#8497A9',
+    '--color-surface-glass': 'rgba(102, 192, 244, 0.06)',
+    '--color-surface-panel': 'rgba(102, 192, 244, 0.11)',
+    '--color-border-subtle': 'rgba(102, 192, 244, 0.18)',
+    '--color-border-strong': 'rgba(255, 255, 255, 0.11)',
+    '--font-display': '"IBM Plex Sans", sans-serif',
+    '--font-body': '"IBM Plex Sans", sans-serif',
+    '--shadow-glow-accent': '0 0 44px rgba(102, 192, 244, 0.20)',
+    '--shadow-card': '0 18px 44px rgba(0, 0, 0, 0.40)',
+    '--theme-ambient': 'radial-gradient(circle at 20% 20%, rgba(102, 192, 244, 0.18), transparent 28%), radial-gradient(circle at 78% 18%, rgba(154, 230, 180, 0.14), transparent 30%)',
+  },
+})

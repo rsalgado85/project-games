@@ -1,0 +1,31 @@
+import { createThemeTokens } from './base'
+
+export const epicTheme = createThemeTokens({
+  id: 'epic',
+  label: 'Epic Experience',
+  description: 'Marketplace premium',
+  idealFor: ['Catalog', 'Discovery'],
+  transition: 'morph',
+  variables: {
+    '--color-accent': '#FFFFFF',
+    '--color-accent-hover': '#F2F2F2',
+    '--color-accent-2': '#FFB24A',
+    '--color-bg-primary': '#050507',
+    '--color-bg-secondary': '#0C0C10',
+    '--color-surface-1': '#111116',
+    '--color-surface-2': '#17171D',
+    '--color-surface-3': '#1E1E25',
+    '--color-text-primary': '#FCFCFC',
+    '--color-text-secondary': '#DADAE5',
+    '--color-text-muted': '#8A8A98',
+    '--color-surface-glass': 'rgba(255, 255, 255, 0.04)',
+    '--color-surface-panel': 'rgba(255, 255, 255, 0.08)',
+    '--color-border-subtle': 'rgba(255, 255, 255, 0.12)',
+    '--color-border-strong': 'rgba(255, 178, 74, 0.22)',
+    '--font-display': '"Archivo", sans-serif',
+    '--font-body': '"DM Sans", sans-serif',
+    '--shadow-glow-accent': '0 0 48px rgba(255, 255, 255, 0.16)',
+    '--shadow-card': '0 22px 48px rgba(0, 0, 0, 0.46)',
+    '--theme-ambient': 'radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.16), transparent 28%), radial-gradient(circle at 80% 18%, rgba(255, 178, 74, 0.12), transparent 28%)',
+  },
+})

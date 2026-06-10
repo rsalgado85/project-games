@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Rajdhani:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Archivo:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Oxanium:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+/* ============================================================
+   GameVault Design System — CSS Custom Properties
+   ============================================================ */
+
+@theme {
+  /* Colors */
+  --color-accent: #6C63FF;
+  --color-accent-hover: #7B74FF;
+  --color-accent-2: #00D2FF;
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
+  --color-surface-glass: rgba(255, 255, 255, 0.05);
+  --color-surface-panel: rgba(255, 255, 255, 0.08);
+  --color-overlay: rgba(0, 0, 0, 0.64);
+  --color-text-inverse: #FFFFFF;
+  
+  --color-bg-primary: #0A0A0F;
+  --color-bg-secondary: #0F0F1A;
+  
+  --color-surface-1: #0F0F1A;
+  --color-surface-2: #141421;
+  --color-surface-3: #1A1A2E;
+  
+  --color-text-primary: #F8F8FF;
+  --color-text-secondary: #C8C8E0;
+  --color-text-muted: #8B8B9E;
+  
+  /* Typography */
+  --font-display: 'Syne', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  
+  /* Shadows */
+  --shadow-glow-accent: 0 0 40px rgba(108, 99, 255, 0.15);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --theme-card-padding: 1rem;
+  --theme-card-radius: 1.25rem;
+  --theme-section-gap: 1.5rem;
+  --theme-transition-duration: 280ms;
+  --theme-motion-duration: 220ms;
+  --theme-ambient-strength: 0.65;
+  --theme-background-blur: 24px;
+}
+
+/* ── Google Fonts ──────────────────────────────────────────── */
+/* ── Base ────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  color-scheme: dark;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+html.light {
+  --color-bg-primary: #F0F0F8;
+  --color-bg-secondary: #E8E8F0;
+  --color-surface-1: #E8E8F0;
+  --color-surface-2: #FFFFFF;
+  --color-surface-3: #F4F4FC;
+  --color-text-primary: #0A0A1F;
+  --color-text-secondary: #2A2A4F;
+  --color-text-muted: #6B6B8F;
+  --color-border-subtle: rgba(10, 10, 31, 0.08);
+  --color-border-strong: rgba(10, 10, 31, 0.14);
+  --color-surface-glass: rgba(255, 255, 255, 0.7);
+  --color-surface-panel: rgba(255, 255, 255, 0.9);
+  --color-overlay: rgba(255, 255, 255, 0.6);
+  background-color: #F0F0F8;
+  color: #0A0A1F;
+  color-scheme: light;
+}
+
+body {
+  font-family: var(--font-body);
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--color-accent) 18%, transparent), transparent 28%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--color-accent-2) 16%, transparent), transparent 30%),
+    linear-gradient(180deg, var(--color-bg-secondary), var(--color-bg-primary));
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: var(--theme-ambient, none);
+  opacity: var(--theme-ambient-strength);
+  transition: opacity var(--theme-transition-duration) ease;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 36px 36px;
+  opacity: 0.05;
+  mix-blend-mode: soft-light;
+}
+
+html[data-dynamic-background='false'] body::before,
+html[data-premium-effects='false'] body::after {
+  opacity: 0;
+}
+
+html[data-compact='true'] {
+  --theme-card-padding: 0.875rem;
+  --theme-section-gap: 1.1rem;
+}
+
+html[data-immersive='true'] {
+  --theme-card-padding: 1.15rem;
+  --theme-section-gap: 1.85rem;
+}
+
+html[data-density='compact'] {
+  --theme-section-gap: 1rem;
+}
+
+html[data-density='immersive'] {
+  --theme-section-gap: 2rem;
+}
+
+/* ── Typography ──────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* ── Utility: Scrollbar ─────────────────────────────────────── */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Utility: Gradient Text ─────────────────────────────────── */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glassmorphism ───────────────────────────────────────────── */
+.glass {
+  background: var(--color-surface-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border-subtle);
+}
+
+/* ── Animated Gradient Background ──────────────────────────── */
+.animated-gradient {
+  background: linear-gradient(-45deg, #0A0A0F, #1A0A2E, #0A1A2E, #1A1A0F);
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── Focus Ring ─────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ── Selection ──────────────────────────────────────────────── */
+::selection {
+  background-color: color-mix(in srgb, var(--color-accent) 28%, transparent);
+  color: var(--color-text-inverse);
+}
+
+/* ── Tailwind Semantic Color Classes (fallback mappings) ────── */
+.text-text-primary { color: var(--color-text-primary); }
+.text-text-secondary { color: var(--color-text-secondary); }
+.text-text-muted { color: var(--color-text-muted); }
+.text-accent { color: var(--color-accent); }
+.bg-bg-primary { background-color: var(--color-bg-primary); }
+.bg-surface-2 { background-color: var(--color-surface-2); }
+.bg-surface-3 { background-color: var(--color-surface-3); }
+.bg-accent { background-color: var(--color-accent); }
+.bg-surface-glass { background-color: var(--color-surface-glass); }
+.bg-surface-panel { background-color: var(--color-surface-panel); }
+.border-border-subtle { border-color: var(--color-border-subtle); }
+.border-border-strong { border-color: var(--color-border-strong); }
+.text-text-inverse { color: var(--color-text-inverse); }
+.hover\:bg-accent-hover:hover { background-color: var(--color-accent-hover); }
+.shadow-accent { --tw-shadow-color: var(--color-accent); }
+.ring-accent { --tw-ring-color: var(--color-accent); }
+.border-accent { border-color: var(--color-accent); }
+.focus\:ring-accent\/20:focus { --tw-ring-color: rgba(108, 99, 255, 0.2); }
+.focus\:border-accent\/60:focus { border-color: rgba(108, 99, 255, 0.6); }
+
+.theme-ambient-panel {
+  background: var(--color-surface-glass);
+  border: 1px solid var(--color-border-subtle);
+  backdrop-filter: blur(var(--theme-background-blur));
+}

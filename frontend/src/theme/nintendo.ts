@@ -1,0 +1,31 @@
+import { createThemeTokens } from './base'
+
+export const nintendoTheme = createThemeTokens({
+  id: 'nintendo',
+  label: 'Nintendo Style',
+  description: 'Accesible y amigable',
+  idealFor: ['Family', 'Casual', 'Pokémon'],
+  transition: 'slide',
+  variables: {
+    '--color-accent': '#FF4D4D',
+    '--color-accent-hover': '#FF7070',
+    '--color-accent-2': '#FFB347',
+    '--color-bg-primary': '#12070A',
+    '--color-bg-secondary': '#1D0D12',
+    '--color-surface-1': '#241118',
+    '--color-surface-2': '#2B151E',
+    '--color-surface-3': '#351C26',
+    '--color-text-primary': '#FFF9F7',
+    '--color-text-secondary': '#F0D9D8',
+    '--color-text-muted': '#C28F96',
+    '--color-surface-glass': 'rgba(255, 77, 77, 0.08)',
+    '--color-surface-panel': 'rgba(255, 77, 77, 0.14)',
+    '--color-border-subtle': 'rgba(255, 77, 77, 0.20)',
+    '--color-border-strong': 'rgba(255, 255, 255, 0.12)',
+    '--font-display': '"Fredoka", sans-serif',
+    '--font-body': '"DM Sans", sans-serif',
+    '--shadow-glow-accent': '0 0 46px rgba(255, 77, 77, 0.18)',
+    '--shadow-card': '0 18px 40px rgba(0, 0, 0, 0.38)',
+    '--theme-ambient': 'radial-gradient(circle at 18% 20%, rgba(255, 77, 77, 0.24), transparent 30%), radial-gradient(circle at 78% 18%, rgba(255, 179, 71, 0.18), transparent 32%)',
+  },
+})

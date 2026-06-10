@@ -1,0 +1,40 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: gamevault-backend
+    env_file:
+      - ./backend/.env.docker
+    ports:
+      - "${BACKEND_PUBLIC_PORT:-19090}:9000"
+    expose:
+      - "9000"
+    networks:
+      - gamevault-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:9000/up"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${FRONTEND_VITE_API_URL:-/api}
+    container_name: gamevault-frontend
+    ports:
+      - "${FRONTEND_PUBLIC_PORT:-15173}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - gamevault-net
+    restart: unless-stopped
+
+networks:
+  gamevault-net:
+    driver: bridge
