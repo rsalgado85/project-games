@@ -1,20 +1,165 @@
-# 🎮 GameVault — Professional Full Stack Portfolio
+# 🎮 GameVault
 
-> A modern, production-grade video game discovery platform built with **React 19 + TypeScript** (frontend) and **Laravel 12 + PHP 8.4** (backend). Designed to demonstrate Senior Full Stack / Tech Lead engineering capabilities.
+> A modern video game discovery platform built with **React 19 + TypeScript**.
+> Explore, compare and save your favourite games — powered entirely by the **RAWG API**, no backend required.
 
-![GameVault Banner](https://via.placeholder.com/1200x400/0A0A0F/6C63FF?text=GameVault+%E2%80%94+Professional+Portfolio)
+**Live:** https://gamevault-psi.vercel.app
+**Repo:** https://github.com/rsalgado85/project-games
 
 ---
 
-## 🏗️ Architecture Overview
+## ✨ Features
+
+- **Trending / Popular / Top Rated / Upcoming** game lists — live from RAWG
+- **Game Detail** — full info, screenshots, trailers, ratings, platforms, stores
+- **Favorites** — persisted in localStorage via Zustand
+- **Comparator** — side-by-side comparison of 2 games
+- **Search & Filters** — genre, platform, ordering, metacritic range
+- **Bilingual** — ES / EN switch in header and mobile drawer
+- **Theme Studio** — dark/light + 7 gaming experience presets (Xbox, PlayStation, Steam…)
+- **SEO** — Helmet per route, Open Graph, Twitter cards, structured data, sitemap
+- **Browser cache** — localStorage TTL replaces server cache (no Redis, no backend)
+
+---
+
+## 🏗️ Architecture
 
 ```
 project-games/
 ├── frontend/          # React 19 + Vite + TypeScript
-├── backend/           # Laravel 12 + PHP 8.4
-├── vercel.json        # Vercel monorepo config
-└── README.md
+│   ├── src/
+│   │   ├── pages/         # Route-level components
+│   │   ├── components/    # UI + layout + game cards
+│   │   ├── services/      # RAWG direct API calls + localStorage cache
+│   │   ├── hooks/         # TanStack Query wrappers
+│   │   ├── store/         # Zustand global state (persisted)
+│   │   ├── cache/         # cacheManager (localStorage TTL)
+│   │   ├── i18n.ts        # ES / EN string map
+│   │   └── utils/         # helpers (image CDN, dates, etc.)
+│   ├── Dockerfile         # nginx static build
+│   └── nginx.conf         # SPA routing, gzip, immutable assets
+├── docker-compose.yml     # Single-container local setup
+├── vercel.json            # Static SPA deploy config
+└── .env.docker            # Local Docker env (RAWG key)
 ```
+
+### Data Flow
+
+```
+Browser
+  └── React page
+    └── TanStack Query hook
+      ├── localStorage cache hit (gv2:*) → return immediately
+      └── cache miss → fetch RAWG API directly → cache result (TTL)
+```
+
+All user state (favorites, history, comparator, theme, language) lives in
+**localStorage** via Zustand `persist`. Zero backend required.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | React 19 + TypeScript |
+| Build | Vite 6 |
+| State | Zustand (persisted to localStorage) |
+| Data fetching | TanStack Query v5 |
+| HTTP | Axios → RAWG API directly |
+| Styling | Tailwind CSS v4 |
+| Animations | Framer Motion |
+| SEO | react-helmet-async |
+| Icons | Lucide React |
+| Toast | react-hot-toast |
+| Container | Docker + nginx |
+| Hosting | Vercel (static) |
+| Data source | RAWG API (free tier) |
+
+---
+
+## ⚙️ Environment Variables
+
+| Variable | Where | Description |
+|---|---|---|
+| `VITE_RAWG_API_KEY` | `.env.local` / `.env.docker` / Vercel | RAWG public read key — register free at https://rawg.io/apidocs |
+| `FRONTEND_PUBLIC_PORT` | `.env.docker` | Docker host port (default `15173`) |
+
+---
+
+## 🚀 Quick Start
+
+### Docker (recommended)
+
+```bash
+git clone https://github.com/rsalgado85/project-games.git
+cd project-games
+
+# Set your RAWG key
+cp .env.docker.example .env.docker   # then edit VITE_RAWG_API_KEY
+
+# Build & run
+docker compose --env-file .env.docker up -d --build
+
+# Open
+open http://localhost:15173
+```
+
+### Without Docker
+
+```bash
+cd frontend
+cp .env.example .env.local
+# Edit .env.local → VITE_RAWG_API_KEY=your_key_here
+npm install --legacy-peer-deps
+npm run dev
+```
+
+---
+
+## 🌐 Vercel Deploy
+
+```bash
+npm i -g vercel
+
+# Add RAWG key to the project
+echo "your_key" | vercel env add VITE_RAWG_API_KEY production
+
+# Deploy
+vercel --prod --yes
+```
+
+---
+
+## 🖼️ Routes
+
+| Route | Description |
+|---|---|
+| `/` | Home — trending games |
+| `/games` | Explore — search + filters |
+| `/popular` | Popular games |
+| `/top-rated` | Top rated by Metacritic |
+| `/upcoming` | Upcoming releases |
+| `/games/:id` | Game detail |
+| `/favorites` | Saved favorites |
+| `/comparator` | Side-by-side comparison |
+| `/about` | About |
+| `/contact` | Contact |
+
+---
+
+## 👤 Author
+
+**Robinson Salgado**
+- GitHub: [@rsalgado85](https://github.com/rsalgado85)
+- LinkedIn: [robinsonsalgado](https://www.linkedin.com/in/robinsonsalgado)
+- X: [@robinsonsalgado](https://x.com/robinsonsalgado)
+
+---
+
+## 📄 License
+
+MIT © 2026
 
 ### System Architecture Diagram
 

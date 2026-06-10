@@ -11,7 +11,9 @@ import type { CacheEntry, CacheConfig } from '@/types'
 // ============================================================
 
 const DEFAULT_TTL = 30 * 60 * 1000 // 30 minutes
-const DEFAULT_PREFIX = 'gv:'
+// v2: bumped when cache shape changed (removed Laravel backend envelope)
+// Old gv: entries in localStorage are silently ignored — no migration needed.
+const DEFAULT_PREFIX = 'gv2:'
 
 class CacheManager {
   private prefix: string
