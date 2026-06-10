@@ -41,8 +41,8 @@ export default function PopularPage() {
             </div>
             <p className="max-w-2xl text-text-secondary leading-7">
               {isEs
-                ? 'Descubre titulos con alta traccion y valoracion. Los datos se actualizan via backend Laravel.'
-                : 'Discover titles with high traction and ratings. Data is refreshed through the Laravel backend.'}
+                ? 'Descubre titulos con alta traccion y valoracion. Datos en tiempo real desde RAWG API.'
+                : 'Discover titles with high traction and ratings. Live data powered by RAWG API.'}
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link to="/games" className="inline-flex items-center gap-2 rounded-xl border border-border-subtle bg-surface-glass px-4 py-2 text-sm text-text-primary hover:border-border-strong hover:bg-surface-panel transition-all">

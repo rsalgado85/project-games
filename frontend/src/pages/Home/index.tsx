@@ -31,7 +31,7 @@ export default function HomePage() {
     {
       icon: Layers3,
       label: isEs ? 'Arquitectura' : 'Architecture',
-      value: 'React + Laravel + Docker',
+      value: 'React + Vite + RAWG API',
     },
   ]
 
@@ -115,7 +115,7 @@ export default function HomePage() {
           <h2 className="text-2xl font-bold text-text-primary">{text.home.aboutThisProject}</h2>
           <p className="mt-3 max-w-3xl text-text-secondary leading-7">{text.home.projectSummary}</p>
           <div className="mt-6 flex flex-wrap gap-2">
-            {['React', 'Laravel', 'RAWG API', 'Docker', 'ES/EN'].map((item) => (
+            {['React', 'Vite', 'RAWG API', 'Zustand', 'ES/EN'].map((item) => (
               <span key={item} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-text-muted">
                 {item}
               </span>

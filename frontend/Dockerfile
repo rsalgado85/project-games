@@ -6,8 +6,8 @@ RUN npm install --legacy-peer-deps
 
 COPY . .
 
-ARG VITE_API_URL=/api
-ENV VITE_API_URL=${VITE_API_URL}
+ARG VITE_RAWG_API_KEY
+ENV VITE_RAWG_API_KEY=${VITE_RAWG_API_KEY}
 
 RUN npx vite build
 

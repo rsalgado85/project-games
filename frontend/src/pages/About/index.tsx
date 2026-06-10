@@ -219,7 +219,7 @@ export default function AboutPage() {
               {text.about.projectSummary}
             </p>
             <div className="mt-5 flex flex-wrap justify-center gap-2">
-              {['React 19', 'TypeScript', 'Laravel 12', 'Clean Architecture', 'TanStack Query', 'Vercel'].map((t) => (
+              {['React 19', 'TypeScript', 'TanStack Query', 'Zustand', 'RAWG API', 'Vercel'].map((t) => (
                 <Badge key={t} variant="accent" size="sm">{t}</Badge>
               ))}
             </div>
