@@ -83,10 +83,20 @@ export default function ComparatorPage() {
                 {slot ? (
                   <>
                     <img
-                      src={getOptimizedImageUrl(slot.background_image, 960)}
+                      src={getOptimizedImageUrl(slot.background_image, 640)}
                       alt={slot.name}
-                      className="aspect-[16/9] w-full object-cover"
+                      className="aspect-[16/9] w-full object-cover bg-surface-3"
                       loading="lazy"
+                      onError={(e) => {
+                        const img = e.currentTarget
+                        // Fallback to original URL if resize CDN fails
+                        if (slot.background_image && !img.src.includes('placeholder')) {
+                          img.src = slot.background_image
+                        } else {
+                          img.src = '/placeholder-game.svg'
+                        }
+                        img.onerror = null
+                      }}
                     />
                     <div className="space-y-3 p-4">
                       <div className="flex items-start justify-between gap-2">

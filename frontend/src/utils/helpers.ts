@@ -81,9 +81,11 @@ export function getOptimizedImageUrl(
   width = 640,
 ): string {
   if (!url) return '/placeholder-game.svg'
+  // Snap to nearest RAWG CDN-supported resize width: 200, 420, 640
+  const safeWidth = width <= 200 ? 200 : width <= 420 ? 420 : 640
   // RAWG supports media.rawg.io/media/resize/{w}/-/{path}
   if (url.includes('media.rawg.io')) {
-    return url.replace('/media/', `/media/resize/${width}/-/`)
+    return url.replace('/media/', `/media/resize/${safeWidth}/-/`)
   }
   return url
 }
