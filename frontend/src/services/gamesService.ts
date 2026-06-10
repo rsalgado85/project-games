@@ -1,4 +1,5 @@
-import api from './api'
+import axios from 'axios'
+import { RAWG_BASE, RAWG_KEY } from './api'
 import { cacheManager, CACHE_KEYS, CACHE_TTL } from '@/cache/cacheManager'
 import type {
   Game,
@@ -10,145 +11,123 @@ import type {
   ContactResponse,
 } from '@/types'
 
-type GameDetailEnvelope = { data?: GameDetail }
+// ============================================================
+// Raw RAWG fetcher — bypasses backend entirely
+// RAWG has CORS enabled for browser requests by design.
+// ============================================================
+async function rawg<T>(path: string, params: Record<string, string | number | undefined> = {}): Promise<T> {
+  const url = new URL(`${RAWG_BASE}${path}`)
+  url.searchParams.set('key', RAWG_KEY)
+  for (const [k, v] of Object.entries(params)) {
+    if (v !== undefined && v !== '' && v !== null) url.searchParams.set(k, String(v))
+  }
+  const res = await axios.get<T>(url.toString())
+  return res.data
+}
 
 function normalizeGameDetail(payload: unknown): GameDetail | null {
   if (!payload || typeof payload !== 'object') return null
-
-  const direct = payload as Partial<GameDetail>
-  if (typeof direct.id === 'number') return direct as GameDetail
-
-  const wrapped = (payload as GameDetailEnvelope).data
-  if (wrapped && typeof wrapped === 'object' && typeof wrapped.id === 'number') {
-    return wrapped
-  }
-
+  const g = payload as Partial<GameDetail>
+  if (typeof g.id === 'number') return g as GameDetail
   return null
 }
 
 // ============================================================
-// Games Service
-// Handles all communication with Laravel backend.
-// RAWG API key is NEVER exposed — all calls go through Laravel.
+// Games Service — RAWG Direct (no backend required)
+// All user state lives in localStorage/Zustand.
+// Browser cacheManager (localStorage TTL) replaces server cache.
 // ============================================================
 
 export const gamesService = {
-  /**
-   * Get trending games (L3 cache → backend L1)
-   */
   async getTrending(page = 1): Promise<GamesResponse> {
     const cacheKey = `${CACHE_KEYS.TRENDING}:${page}`
     const cached = cacheManager.get<GamesResponse>(cacheKey)
     if (cached) return cached
-
-    const { data } = await api.get<GamesResponse>('/games/trending', { params: { page } })
+    const data = await rawg<GamesResponse>('/games', { ordering: '-added', page, page_size: 20 })
     cacheManager.set(cacheKey, data, { ttl: CACHE_TTL.MEDIUM })
     return data
   },
 
-  /**
-   * Get all-time popular games
-   */
   async getPopular(page = 1): Promise<GamesResponse> {
     const cacheKey = `${CACHE_KEYS.POPULAR}:${page}`
     const cached = cacheManager.get<GamesResponse>(cacheKey)
     if (cached) return cached
-
-    const { data } = await api.get<GamesResponse>('/games/popular', { params: { page } })
+    const data = await rawg<GamesResponse>('/games', { ordering: '-rating', metacritic: '60,100', page, page_size: 20 })
     cacheManager.set(cacheKey, data, { ttl: CACHE_TTL.LONG })
     return data
   },
 
-  /**
-   * Get top-rated games by Metacritic
-   */
   async getTopRated(page = 1): Promise<GamesResponse> {
     const cacheKey = `${CACHE_KEYS.TOP_RATED}:${page}`
     const cached = cacheManager.get<GamesResponse>(cacheKey)
     if (cached) return cached
-
-    const { data } = await api.get<GamesResponse>('/games/top-rated', { params: { page } })
+    const data = await rawg<GamesResponse>('/games', { ordering: '-metacritic', metacritic: '80,100', page, page_size: 20 })
     cacheManager.set(cacheKey, data, { ttl: CACHE_TTL.LONG })
     return data
   },
 
-  /**
-   * Get upcoming releases
-   */
   async getUpcoming(page = 1): Promise<GamesResponse> {
     const cacheKey = `${CACHE_KEYS.UPCOMING}:${page}`
     const cached = cacheManager.get<GamesResponse>(cacheKey)
     if (cached) return cached
-
-    const { data } = await api.get<GamesResponse>('/games/upcoming', { params: { page } })
+    const today = new Date().toISOString().split('T')[0]
+    const nextYear = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+    const data = await rawg<GamesResponse>('/games', { dates: `${today},${nextYear}`, ordering: 'released', page, page_size: 20 })
     cacheManager.set(cacheKey, data, { ttl: CACHE_TTL.MEDIUM })
     return data
   },
 
-  /**
-   * Search games with filters
-   */
   async searchGames(filters: GameFilters): Promise<GamesResponse> {
     const paramsStr = new URLSearchParams(
       Object.entries(filters)
         .filter(([, v]) => v !== undefined && v !== '')
         .map(([k, v]) => [k, String(v)]),
     ).toString()
-
     const cacheKey = CACHE_KEYS.SEARCH(paramsStr)
     const cached = cacheManager.get<GamesResponse>(cacheKey)
     if (cached) return cached
-
-    const { data } = await api.get<GamesResponse>('/games/search', { params: filters })
+    const { q, page, page_size, platforms, genres, ordering, dates, tags, metacritic } = filters
+    const data = await rawg<GamesResponse>('/games', {
+      search: q, page, page_size, platforms, genres, ordering, dates, tags, metacritic,
+    })
     cacheManager.set(cacheKey, data, { ttl: CACHE_TTL.SHORT })
     return data
   },
 
-  /**
-   * Get a single game's full details
-   */
   async getGameDetail(id: number | string): Promise<GameDetail> {
     const cacheKey = CACHE_KEYS.GAME_DETAIL(id)
-    const cached = cacheManager.get<unknown>(cacheKey)
+    const cached = cacheManager.get<GameDetail>(cacheKey)
     const normalizedCached = normalizeGameDetail(cached)
-    if (normalizedCached) {
-      if (cached !== normalizedCached) {
-        cacheManager.set(cacheKey, normalizedCached, { ttl: CACHE_TTL.LONG })
-      }
-      return normalizedCached
-    }
+    if (normalizedCached) return normalizedCached
     if (cached) cacheManager.remove(cacheKey)
 
-    const { data } = await api.get<GameDetail | GameDetailEnvelope>(`/games/${id}`)
-    const normalized = normalizeGameDetail(data)
+    // Fetch detail + screenshots in parallel — RAWG detail doesn't embed screenshots
+    const [detail, screenshotsRes] = await Promise.all([
+      rawg<GameDetail>(`/games/${id}`),
+      rawg<{ results: GameDetail['screenshots'] }>(`/games/${id}/screenshots`),
+    ])
 
-    if (!normalized) {
-      throw new Error(`Invalid game detail payload for id ${id}`)
-    }
+    const normalized = normalizeGameDetail(detail)
+    if (!normalized) throw new Error(`Invalid RAWG payload for id ${id}`)
 
+    normalized.screenshots = screenshotsRes?.results ?? []
     cacheManager.set(cacheKey, normalized, { ttl: CACHE_TTL.LONG })
     return normalized
   },
 
-  /**
-   * Compare two games side by side
-   */
   async compareGames(gameAId: number, gameBId: number): Promise<{ gameA: GameDetail; gameB: GameDetail }> {
-    const { data } = await api.get<{ gameA: GameDetail; gameB: GameDetail }>('/games/compare', {
-      params: { game_a: gameAId, game_b: gameBId },
-    })
-    return data
+    const [gameA, gameB] = await Promise.all([
+      gamesService.getGameDetail(gameAId),
+      gamesService.getGameDetail(gameBId),
+    ])
+    return { gameA, gameB }
   },
 
-  /**
-   * Get trailers/movies for a game.
-   */
   async getGameMovies(id: number | string): Promise<GameMovie[]> {
     const cacheKey = CACHE_KEYS.GAME_MOVIES(id)
     const cached = cacheManager.get<GameMovie[]>(cacheKey)
     if (cached) return cached
-
-    const { data } = await api.get<{ results?: GameMovie[] }>(`/games/${id}/movies`)
+    const data = await rawg<{ results?: GameMovie[] }>(`/games/${id}/movies`)
     const results = Array.isArray(data.results) ? data.results : []
     cacheManager.set(cacheKey, results, { ttl: CACHE_TTL.LONG })
     return results
@@ -156,13 +135,17 @@ export const gamesService = {
 }
 
 // ============================================================
-// Contact Service
+// Contact Service — mailto fallback (no backend required)
+// For a real form, integrate EmailJS or Formspree in Contact page.
 // ============================================================
 
 export const contactService = {
   async sendMessage(formData: ContactFormData): Promise<ContactResponse> {
-    const { data } = await api.post<ContactResponse>('/contact', formData)
-    return data
+    // Open native email client — zero backend dependency
+    const subject = encodeURIComponent(formData.subject)
+    const body = encodeURIComponent(`De: ${formData.name} <${formData.email}>\n\n${formData.message}`)
+    window.location.href = `mailto:robinsonsalgado85@gmail.com?subject=${subject}&body=${body}`
+    return { success: true, message: 'Opening email client…' }
   },
 }
 

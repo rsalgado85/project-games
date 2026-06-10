@@ -32,3 +32,5 @@ backend/*.sqlite
 
 # OS
 Thumbs.db
+.vercel
+.env*

@@ -1,39 +1,45 @@
 import axios from 'axios'
 import toast from 'react-hot-toast'
 
+// ── RAWG API Client ──────────────────────────────────────────
+// RAWG is a public read-only API: keys are visible in network traffic by design
+// (same model as Google Maps public keys). Rate limit: 20k req/month free.
+// All state (favorites, history, compare) lives in localStorage via Zustand.
+export const RAWG_BASE = 'https://api.rawg.io/api'
+export const RAWG_KEY = (import.meta.env.VITE_RAWG_API_KEY as string) ?? ''
+
+export function rawgUrl(path: string, params: Record<string, string | number | undefined> = {}): string {
+  const url = new URL(`${RAWG_BASE}${path}`)
+  url.searchParams.set('key', RAWG_KEY)
+  for (const [k, v] of Object.entries(params)) {
+    if (v !== undefined && v !== '' && v !== null) url.searchParams.set(k, String(v))
+  }
+  return url.toString()
+}
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL ?? '',
+  baseURL: RAWG_BASE,
   timeout: 15_000,
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-    'X-Requested-With': 'XMLHttpRequest',
-  },
+  headers: { Accept: 'application/json' },
 })
 
-// ── Request Interceptor ──────────────────────────────────────
 api.interceptors.request.use(
-  (config) => config,
+  (config) => {
+    const url = new URL(config.url ?? '', RAWG_BASE)
+    url.searchParams.set('key', RAWG_KEY)
+    config.url = url.toString().replace(RAWG_BASE, '')
+    return config
+  },
   (error: unknown) => Promise.reject(error),
 )
 
-// ── Response Interceptor ─────────────────────────────────────
 api.interceptors.response.use(
   (response) => response,
   (error: unknown) => {
     if (axios.isAxiosError(error)) {
       const status = error.response?.status ?? 0
-      const message = (error.response?.data as { message?: string })?.message ?? error.message
-
-      if (status === 429) {
-        toast.error('Too many requests. Please wait a moment.')
-      } else if (status >= 500) {
-        toast.error('Server error. Please try again later.')
-      } else if (status === 404) {
-        // Let callers handle 404s silently
-      } else if (status > 0) {
-        toast.error(message || 'An error occurred.')
-      }
+      if (status === 429) toast.error('Demasiadas solicitudes. Espera un momento.')
+      else if (status >= 500) toast.error('Error del servidor RAWG. Intenta más tarde.')
     }
     return Promise.reject(error)
   },
