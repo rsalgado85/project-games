@@ -12,17 +12,10 @@ frontend/.env.local
 frontend/.env.production
 frontend/.env.docker
 
-# Backend
-backend/vendor/
-backend/.env
-backend/.env.docker
-backend/storage/logs/*.log
-backend/bootstrap/cache/*.php
-backend/storage/app/
-backend/storage/framework/cache/
-backend/storage/framework/sessions/
-backend/storage/framework/views/
-backend/*.sqlite
+# Backend (removed — app is now pure frontend static + direct RAWG API)
+backend/
+api/
+scripts/vercel-install.sh
 
 # IDE
 .vscode/
