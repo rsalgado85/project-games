@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gamevault.app/sitemap.xml
+Sitemap: https://gamevault-psi.vercel.app/sitemap.xml
