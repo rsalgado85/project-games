@@ -13,6 +13,7 @@ type TranslationMap = {
     favorites: string
     about: string
     contact: string
+    donate: string
     search: string
     searchPlaceholder: string
     menu: string
@@ -76,6 +77,21 @@ type TranslationMap = {
     availability: string
     availabilityNote: string
   }
+  donate: {
+    title: string
+    subtitle: string
+    summary: string
+    selectAmount: string
+    customAmount: string
+    oneTime: string
+    monthly: string
+    donateButton: string
+    thankYouTitle: string
+    thankYouMessage: string
+    donateAgain: string
+    whyDonate: string
+    whyDonateText: string
+  }
   pages: {
     gamesTitle: string
     popularTitle: string
@@ -98,6 +114,7 @@ const TEXT: Record<Language, TranslationMap> = {
       favorites: 'Favoritos',
       about: 'Sobre mí',
       contact: 'Contacto',
+      donate: 'Donar',
       search: 'Buscar juegos',
       searchPlaceholder: 'Buscar juegos…',
       menu: 'Abrir menú',
@@ -161,6 +178,21 @@ const TEXT: Record<Language, TranslationMap> = {
       availability: 'Disponible para proyectos',
       availabilityNote: 'Disponible para iniciativas de liderazgo, modernización, arquitectura y transformación con IA.',
     },
+    donate: {
+      title: 'Apoya este proyecto',
+      subtitle: 'Tu contribución mantiene GameVault vivo',
+      summary: 'GameVault es un proyecto gratuito y de código abierto. Si encuentras valor en esta plataforma, considera apoyar su desarrollo con una donación única o recurrente.',
+      selectAmount: 'Selecciona un monto',
+      customAmount: 'Monto personalizado',
+      oneTime: 'Una vez',
+      monthly: 'Mensual',
+      donateButton: 'Donar',
+      thankYouTitle: '¡Gracias por tu apoyo!',
+      thankYouMessage: 'Tu generosidad ayuda a mantener GameVault gratuito, rápido y en mejora constante. Cada contribución, por pequeña que sea, marca la diferencia.',
+      donateAgain: 'Hacer otra donación',
+      whyDonate: '¿Por qué donar?',
+      whyDonateText: 'Tu apoyo cubre costos de infraestructura, APIs, dominio y permite dedicar tiempo a nuevas funcionalidades, mejoras de rendimiento y mantenimiento continuo. GameVault no tiene anuncios ni vende datos — solo existe gracias a usuarios como tú.',
+    },
     pages: {
       gamesTitle: 'Explorar juegos',
       popularTitle: 'Juegos populares',
@@ -181,6 +213,7 @@ const TEXT: Record<Language, TranslationMap> = {
       favorites: 'Favorites',
       about: 'About Me',
       contact: 'Contact',
+      donate: 'Donate',
       search: 'Search games',
       searchPlaceholder: 'Search games…',
       menu: 'Open menu',
@@ -243,6 +276,21 @@ const TEXT: Record<Language, TranslationMap> = {
       linkedin: 'LinkedIn',
       availability: 'Available for projects',
       availabilityNote: 'Available for leadership, modernization, architecture and AI transformation initiatives.',
+    },
+    donate: {
+      title: 'Support this project',
+      subtitle: 'Your contribution keeps GameVault alive',
+      summary: 'GameVault is a free, open-source project. If you find value in this platform, consider supporting its development with a one-time or recurring donation.',
+      selectAmount: 'Select an amount',
+      customAmount: 'Custom amount',
+      oneTime: 'One-time',
+      monthly: 'Monthly',
+      donateButton: 'Donate',
+      thankYouTitle: 'Thank you for your support!',
+      thankYouMessage: 'Your generosity helps keep GameVault free, fast, and constantly improving. Every contribution, no matter how small, makes a difference.',
+      donateAgain: 'Make another donation',
+      whyDonate: 'Why donate?',
+      whyDonateText: 'Your support covers infrastructure costs, APIs, domain, and allows dedicating time to new features, performance improvements, and ongoing maintenance. GameVault has no ads and sells no data — it only exists thanks to users like you.',
     },
     pages: {
       gamesTitle: 'Explore Games',

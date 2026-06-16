@@ -10,6 +10,7 @@ import ComparatorPage from '@/pages/Comparator'
 import FavoritesPage from '@/pages/Favorites'
 import AboutPage from '@/pages/About'
 import ContactPage from '@/pages/Contact'
+import DonatePage from '@/pages/Donate'
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: 'contact',
         element: <ContactPage />,
+      },
+      {
+        path: 'donate',
+        element: <DonatePage />,
       },
     ],
   },

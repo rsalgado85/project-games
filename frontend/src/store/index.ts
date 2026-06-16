@@ -80,10 +80,7 @@ export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
       // ── Theme ──────────────────────────────────────────────
-      theme:
-        typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches
-          ? 'dark'
-          : 'light',
+      theme: 'dark',
 
       setTheme: (theme) => {
         if (get().theme === theme) return

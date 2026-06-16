@@ -63,13 +63,24 @@ export default function AboutPage() {
         {/* Hero */}
         <FadeIn>
           <div className="mb-16 flex flex-col items-center text-center">
-            {/* Avatar */}
+            {/* Avatar — QR Code → LinkedIn */}
             <div className="relative mb-6">
-              <div className="h-28 w-28 overflow-hidden rounded-3xl border-2 border-white/15 bg-gradient-to-br from-accent/40 to-accent-2/40 shadow-2xl shadow-accent/20">
-                <div className="flex h-full w-full items-center justify-center text-5xl">👨‍💻</div>
-              </div>
-              <div className="absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-500 shadow-lg">
-                <span className="text-xs font-bold text-white">✓</span>
+              <a
+                href="https://www.linkedin.com/in/robinsonsalgado/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block h-28 w-28 overflow-hidden rounded-3xl border-2 border-white/15 bg-white shadow-2xl shadow-accent/20 hover:border-accent/50 hover:scale-105 transition-all duration-300"
+                title="LinkedIn — Robinson Salgado"
+              >
+                <img
+                  src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://www.linkedin.com/in/robinsonsalgado/"
+                  alt="QR Code — LinkedIn Robinson Salgado"
+                  className="h-full w-full object-cover"
+                  loading="eager"
+                />
+              </a>
+              <div className="absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded-xl bg-[#0A66C2] shadow-lg">
+                <Linkedin size={14} className="text-white" />
               </div>
             </div>
 

@@ -14,6 +14,7 @@ import {
   Calendar,
   Zap,
   Sparkles,
+  Coffee,
 } from 'lucide-react'
 import { useAppStore } from '@/store'
 import { useScrollPosition } from '@/hooks/useUI'
@@ -133,6 +134,16 @@ export function Header() {
                   {favorites.length > 9 ? '9+' : favorites.length}
                 </span>
               )}
+            </Link>
+
+            {/* Donate */}
+            <Link
+              to="/donate"
+              className="hidden sm:flex h-9 items-center gap-1.5 rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 text-xs font-medium text-amber-400 transition-all hover:bg-amber-500/20 hover:border-amber-500/50"
+              aria-label={isEs ? 'Donar' : 'Donate'}
+            >
+              <Coffee size={13} />
+              <span className="hidden xl:inline">{text.header.donate}</span>
             </Link>
 
             {/* Compare Indicator */}
@@ -307,6 +318,19 @@ export function Header() {
                 }
               >
                 {text.header.contact}
+              </NavLink>
+              <NavLink
+                to="/donate"
+                onClick={() => setMobileOpen(false)}
+                className={({ isActive }) =>
+                  cn(
+                    'flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all',
+                    isActive ? 'bg-accent/15 text-accent' : 'text-text-secondary hover:text-text-primary hover:bg-surface-glass',
+                  )
+                }
+              >
+                <Coffee size={17} />
+                {text.header.donate}
               </NavLink>
 
               <div className="mt-4 flex rounded-xl border border-border-subtle bg-surface-glass p-1" role="group" aria-label={isEs ? 'Selector de idioma' : 'Language switch'}>

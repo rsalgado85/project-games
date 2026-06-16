@@ -33,6 +33,7 @@ export function Footer() {
       links: [
         { label: text.footer.aboutMe, to: '/about' },
         { label: text.footer.contact, to: '/contact' },
+        { label: text.header.donate, to: '/donate' },
       ],
     },
   ]
